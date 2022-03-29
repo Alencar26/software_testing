@@ -25,6 +25,10 @@ public class PosicaoTamanho {
         driver.get("https://www.google.com.br");
         Assert.assertEquals("Google", driver.getTitle());
 
-        driver.close();
+        // close(), só fecha uma aba do browser
+        //driver.close();
+
+        // quit(), fecha o browser e mata as instâncias criadas
+        driver.quit();
     }
 }
