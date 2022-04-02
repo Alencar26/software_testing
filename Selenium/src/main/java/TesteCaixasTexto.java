@@ -7,19 +7,20 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class TesteCaixasTexto {
 
-    public WebDriver instanciarNavegador() {
+    final String PATH_WEB_PAGE = "file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html";
+
+    public WebDriver instanciarNavegador(String path) {
         System.setProperty("webdriver.gecko.driver", "/home/alencar/www/Selenium/geckodriver/geckodriver");
-        return new FirefoxDriver();
+        WebDriver driver = new FirefoxDriver();
+        driver.manage().window().setSize(new Dimension(1200, 765));
+        driver.get(path);
+        return driver;
     }
 
     @Test
     public void testeTextField() {
 
-        WebDriver driver = instanciarNavegador();
-
-        driver.manage().window().setSize(new Dimension(1200, 765));
-
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        WebDriver driver = instanciarNavegador(PATH_WEB_PAGE);
 
         //escrevendo no campo de input
         driver.findElement(By.id("elementosForm:nome")).sendKeys("Escrevendo no text field.");
@@ -32,8 +33,7 @@ public class TesteCaixasTexto {
 
     @Test
     public void interacaoComTextArea() {
-        WebDriver driver = instanciarNavegador();
-        driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+        WebDriver driver = instanciarNavegador(PATH_WEB_PAGE);
 
         //escrevendo no campo
         driver.findElement(By.id("elementosForm:sugestoes"))
@@ -41,8 +41,8 @@ public class TesteCaixasTexto {
 
         //validando valores do campo.
         String valorTextArea = driver.findElement(By.id("elementosForm:sugestoes")).getAttribute("value");
-//        Assert.assertEquals("Testando  campo de textArea.", valorTextArea);
-//
-//        driver.quit();
+        
+        Assert.assertEquals("Testando  campo de textArea.", valorTextArea);
+        driver.quit();
     }
 }
